@@ -1,16 +1,4 @@
-const board = [
-    null, null, null,
-    null, null, null,
-    null, null, null
-];
 
-const players = [{
-    name: "Player 1",
-    marker: 1
-}, {
-    name: "Player 2",
-    marker: 2
-}];
 
 function resetBoard() {
     console.log(board);
@@ -24,54 +12,98 @@ function resetBoard() {
 }
 
 
-let currentPlayer = players[0];
-
-function printBoard() {
-    console.log(board);
-    return board;
-}
-
-function placeMarker(cell, player) {
-    if (board[cell] === null) {
-        board[cell] = player.marker;
-        return true
-    } else {
-        return false
-    }
-}
-
-function checkWin(board){
-    const winCombo = [
-        [0, 1, 2],
-        [0, 3, 6],
-        [0, 4, 8],
-        [3, 4, 5],
-        [1, 4, 7],
-        [2, 4, 6],
-        [2, 5, 8],
-        [6, 7, 8]
+function Gameboard() {
+    const board = [
+        null, null, null,
+        null, null, null,
+        null, null, null
     ];
-    for (const combo of winCombo) {
-        const [a, b, c] = combo;
-        if (board[a] !== null && board[a] === board[b] && board[b] === board[c]) {
-            if (board[a] === "X") {
-                return 'Player 1 wins!';
-            } else if (board[a] === "O"){
-                return 'Player 2 wins!';
-            };
-        };
+
+    const getBoard = () => board;
+
+    const addMarker = (cell, player) => {
+        if (board[cell] === null) {
+            board[cell] = player.marker;
+        }
     };
 
-    if (board.every(cell => cell !== null)) {
-        return `It's a tie!`
-    }
+    const printBoard = () => {
+        console.log(board)
+    };
 
-    return 
+    return {getBoard, addMarker, printBoard};
 }
 
+function GameController(playerOne, playerTwo) {
+    const board = Gameboard();
 
-// Win Combinations:
+    const players = [{
+        name: playerOne,
+        marker: 1
+    }, {
+        name: playerTwo,
+        marker: 2
+    }];
 
-// 0, 1, 2
-// 3, 4, 5
-// 6, 7, 8
+    let currentPlayer = players[0];
+
+    const switchPlayer = () => {
+        currentPlayer = currentPlayer === players[0] ? players[1] : players[0];
+    };
+
+    const getCurrentPlayer = () => currentPlayer;
+
+    const printNewRound = () => {
+        board.printBoard();
+        console.log(`${getCurrentPlayer().name}'s turn.`);
+    };
+
+    const playRound = (cell) => {
+        board.addMarker(cell,getCurrentPlayer());
+
+        const checkWin = () => {
+            const winCombo = [
+                [0, 1, 2],
+                [0, 3, 6],
+                [0, 4, 8],
+                [3, 4, 5],
+                [1, 4, 7],
+                [2, 4, 6],
+                [2, 5, 8],
+                [6, 7, 8]
+            ];
+            const boardState = board.getBoard();  
+            for (const combo of winCombo) {
+                const [a, b, c] = combo;
+                if (boardState[a] !== null && boardState[a] === boardState[b] && boardState[b] === boardState[c]) {
+                    if (boardState[a] === 1) {
+                        return 'Player 1 wins!';
+                    } else if (boardState[a] === 2){
+                        return 'Player 2 wins!';
+                    };
+                };
+            };
+        
+            if (boardState.every(cell => cell !== null)) {
+                return `It's a tie!`
+            };
+            return null;
+        };
+
+        const result = checkWin();
+        if (result) {
+            console.log(checkWin());
+            return;
+        }
+
+        switchPlayer();
+        printNewRound();
+    };
+
+    printNewRound();
+    return {playRound, getCurrentPlayer};
+    
+}
+
+const game = GameController();
+
