@@ -2,4 +2,108 @@
     margin: 0;
     padding: 0;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-color: #f5ebe0;
+}
+
+h1 {
+    text-align: center;
+    font-size: 4rem;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-weight: 800;
+    color: #9e9082;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}
+
+.board {
+    display: grid;
+    height: 700px; /* Adjusted height to make cells square */
+    width: 700px;  /* Adjusted width to make cells square */
+    grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+    gap: 2px;
+    background-color: #d6ccc2;
+    border-bottom: 3px solid #f5ebe0;
+}
+
+.cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 8rem;
+    border: 3px solid #d6ccc2;
+    cursor: pointer;
+    height: 100%; /* Make sure cell fills the grid area */
+    width: 100%;  /* Make sure cell fills the grid area */
+    background-color: #f5ebe0;
+    color:#958175;
+
+}
+
+.cell:nth-child(3n + 1) {
+    border-left: none;
+}
+
+.cell:nth-child(3n) {
+    border-right: none;
+}
+
+.cell:nth-child(-n+3) {
+    border-top: none;
+}
+
+.cell:nth-last-child(-n+3) {
+    border-bottom: none;
+}
+
+.input {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#start {
+    background-color: #d5bdaf;
+    color: #806d61;
+    border: none;
+}
+
+#reset {
+    background-color: #e3d5ca;
+    color: #978a80;
+    border: none;
+}
+
+h3 {
+    color: #cfbdaf;
+}
+
+.input input, .input button {
+    font-size: 1rem;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.input button {
+    padding: 15px;
+}
+
+input {
+    background-color: white;
+    border: none;
+    border-radius: 20px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    padding: 10px;
+}
+
+.turn {
+    font-size: 2rem;
+    margin-bottom: 50px;
+    color: #cebbad;
 }
