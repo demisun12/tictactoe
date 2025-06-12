@@ -1,8 +1,6 @@
 const board = (function (){
-    const row1 = ["","",""];
-    const row2 = ["","",""];
-    const row3 = ["","",""];
-    return {row1,row2,row3};
+    const gameboard = ["","","","","","","","",""];
+    return {gameboard};
 })();
 
 const playerOne = {
