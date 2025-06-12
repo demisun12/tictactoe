@@ -1,12 +1,11 @@
-function createPlayer(name,marker) {
-    return {name,marker};
+function createPlayer(name, marker) {
+    return { name, marker };
 }
 
-const board = (function (){
-    const gameboard = ["","","","","","","","",""];
+const board = (function () {
+    const gameboard = ["", "", "", "", "", "", "", "", ""];
 
     const getBoard = () => gameboard;
-
 
     const updateBoard = (place, mark) => {
         if (gameboard[place] === "") {
@@ -26,25 +25,44 @@ const board = (function (){
         `);
     };
 
-
-    return {getBoard, updateBoard, printBoard};
+    return { getBoard, updateBoard, printBoard };
 })();
 
-const playGame = (function (playerOne, playerTwo){
+const playGame = function (playerOneName, playerTwoName) {
     const GameBoard = board;
 
     const players = [
-        createPlayer(playerOne,0),
-        createPlayer(playerTwo,1)
+        createPlayer(playerOneName, "X"),
+        createPlayer(playerTwoName, "O")
     ];
 
     let activePlayer = players[0];
 
     const switchPlayerTurn = () => {
         activePlayer = activePlayer === players[0] ? players[1] : players[0];
-    }
+    };
 
     const getActivePlayer = () => activePlayer;
+
+    const checkWinner = () => {
+        const b = GameBoard.getBoard();
+        const winCombos = [
+            [0, 1, 2], [3, 4, 5], [6, 7, 8],
+            [0, 3, 6], [1, 4, 7], [2, 5, 8],
+            [0, 4, 8], [2, 4, 6]
+        ];
+
+        for (const [a, b1, c] of winCombos) {
+            if (b[a] && b[a] === b[b1] && b[a] === b[c]) {
+                return true;
+            }
+        }
+        return false;
+    };
+
+    const checkTie = () => {
+        return GameBoard.getBoard().every(cell => cell !== "");
+    };
 
     const printNewRound = () => {
         GameBoard.printBoard();
@@ -52,25 +70,32 @@ const playGame = (function (playerOne, playerTwo){
     };
 
     const playRound = (space) => {
-        GameBoard.placeMark(space, getActivePlayer().marker);
+        const success = GameBoard.updateBoard(space, getActivePlayer().marker);
+        if (!success) {
+            console.log("That space is taken!");
+            return;
+        }
+
+        if (checkWinner()) {
+            GameBoard.printBoard();
+            console.log(`${getActivePlayer().name} wins!`);
+            return;
+        }
+
+        if (checkTie()) {
+            GameBoard.printBoard();
+            console.log("It's a tie!");
+            return;
+        }
+
         switchPlayerTurn();
         printNewRound();
     };
 
     printNewRound();
+    return { playRound, getActivePlayer };
+};
 
-    return {playRound, getActivePlayer};
-})
-
-const game = playGame();
-
-
-
-
-
-
-
-
-
-
-
+// Usage:
+const game = playGame("Alice", "Bob");
+// game.playRound(0); etc.
