@@ -30,12 +30,39 @@ const board = (function (){
     return {getBoard, updateBoard, printBoard};
 })();
 
-const gameFlow = {
-    turn: playerOne.name,
-    mark: playerOne.marker
-}; //after each turn, object values should change to other players name/markers
+const playGame = (function (playerOne, playerTwo){
+    const GameBoard = board;
 
+    const players = [
+        createPlayer(playerOne,0),
+        createPlayer(playerTwo,1)
+    ];
 
+    let activePlayer = players[0];
+
+    const switchPlayerTurn = () => {
+        activePlayer = activePlayer === players[0] ? players[1] : players[0];
+    }
+
+    const getActivePlayer = () => activePlayer;
+
+    const printNewRound = () => {
+        GameBoard.printBoard();
+        console.log(`${getActivePlayer().name}'s turn.`);
+    };
+
+    const playRound = (space) => {
+        GameBoard.placeMark(space, getActivePlayer().marker);
+        switchPlayerTurn();
+        printNewRound();
+    };
+
+    printNewRound();
+
+    return {playRound, getActivePlayer};
+})
+
+const game = playGame();
 
 
 
