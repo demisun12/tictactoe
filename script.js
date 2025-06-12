@@ -11,6 +11,8 @@ const board = (function (){
     const printBoard = () => {
         console.log(gameboard);
     }
+
+    return {getBoard, printBoard};
 })();
 
 const gameFlow = {
