@@ -96,6 +96,3 @@ const playGame = function (playerOneName, playerTwoName) {
     return { playRound, getActivePlayer };
 };
 
-// Usage:
-const game = playGame("Alice", "Bob");
-// game.playRound(0); etc.
