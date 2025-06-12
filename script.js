@@ -1,21 +1,13 @@
-const board = (function (){
-    const gameboard = ["","","","","","","","",""];
-    return {gameboard};
-})();
-
-const playerOne = {
-    name: "",
-    marker: "X"
-};
-
-const playerTwo = {
-    name: "",
-    marker: "O"
-};  
-
 function createPlayer(name,marker) {
     return {name,marker};
 }
+
+const board = (function (){
+    const gameboard = ["","","","","","","","",""];
+    return {gameboard};
+
+    const getBoard = () => gameboard;
+})();
 
 const gameFlow = {
     turn: playerOne.name,
