@@ -7,6 +7,10 @@ const board = (function (){
     return {gameboard};
 
     const getBoard = () => gameboard;
+
+    const printBoard = () => {
+        console.log(gameboard);
+    }
 })();
 
 const gameFlow = {
@@ -14,10 +18,15 @@ const gameFlow = {
     mark: playerOne.marker
 }; //after each turn, object values should change to other players name/markers
 
-function playTurn(spot,player) {
 
-}
 
-function changePlayer(player) {
 
-}
+
+
+
+
+
+
+
+
+
